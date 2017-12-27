@@ -1,0 +1,72 @@
+﻿<UserControl
+    x:Class="Liuliu.CodeCracker.UserControls.CodeLoadView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    mc:Ignorable="d"
+    d:DesignHeight="230" d:DesignWidth="355" d:DataContext="{Binding Main.CodeLoad, Source={StaticResource Locator}}">
+    <GroupBox Header="图像加载" Margin="0">
+        <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <RadioButton IsChecked="{Binding FromLocal}" Content="本地：" GroupName="FromType"/>
+                <StackPanel Orientation="Horizontal" IsEnabled="{Binding FromLocal}">
+                    <TextBox Width="233" Text="{Binding LocalPath}"/>
+                    <Button Content="浏览" Command="{Binding CodeBrowseCommand}"/>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0 3">
+                <RadioButton IsChecked="{Binding FromLocal, Converter={StaticResource BooleanToNoConverter}}" Content="网络：" GroupName="FromType"/>
+                <StackPanel Orientation="Horizontal" IsEnabled="{Binding FromLocal,Converter={StaticResource BooleanToNoConverter}}">
+                    <TextBox Width="233" Text="{Binding CodeUrl}"/>
+                    <Button Content="刷新" Command="{Binding RemoteRefreshCommand}"/>
+                </StackPanel>
+            </StackPanel>
+            <Grid Height="125">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="7*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+                <GroupBox Header="处理图像" Margin="0 0 2 0" Padding="0">
+                    <Rectangle>
+                        <Rectangle.Fill>
+                            <VisualBrush Stretch="Uniform">
+                                <VisualBrush.Visual>
+                                    <Image Source="{Binding ProcessImage,Mode=OneWay,Converter={StaticResource BitmapToImageSourceConverter}}" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                                </VisualBrush.Visual>
+                            </VisualBrush>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                </GroupBox>
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <GroupBox Header="原始图像" Padding="0" Margin="0">
+                        <Rectangle>
+                            <Rectangle.Fill>
+                                <VisualBrush Stretch="Uniform">
+                                    <VisualBrush.Visual>
+                                        <Image Source="{Binding SourceImage, Converter={StaticResource BitmapToImageSourceConverter}}" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                                    </VisualBrush.Visual>
+                                </VisualBrush>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                    </GroupBox>
+                    <GroupBox Header="结果图像" Grid.Row="1" Margin="0 2 0 0" Padding="0">
+                        <Rectangle>
+                            <Rectangle.Fill>
+                                <VisualBrush Stretch="Uniform">
+                                    <VisualBrush.Visual>
+                                        <Image Source="{Binding TargetImage, Converter={StaticResource BitmapToImageSourceConverter}}" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                                    </VisualBrush.Visual>
+                                </VisualBrush>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                    </GroupBox>
+                </Grid>
+            </Grid>
+        </StackPanel>
+    </GroupBox>
+</UserControl>

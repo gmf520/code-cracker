@@ -1,0 +1,66 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ocvt="clr-namespace:OSharp.Utility.Wpf.Converters;assembly=OSharp.Utility.Wpf"
+    xmlns:vm="clr-namespace:Liuliu.CodeCracker.ViewModels">
+    <ocvt:BitmapToImageSourceConverter x:Key="BitmapToImageSourceConverter"/>
+    <ocvt:BooleanToFontWeightConverter x:Key="BooleanToFontWeightConverter"/>
+    <ocvt:BooleanToNoConverter x:Key="BooleanToNoConverter"/>
+    <ocvt:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    <ocvt:DateTimeToStringConverter x:Key="DateTimeToStringConverter"/>
+    <ocvt:TimeSpanToStringConverter x:Key="TimeSpanToStringConverter"/>
+    <vm:ViewModelLocator x:Key="Locator"/>
+    <SolidColorBrush x:Key="BlueBrush" Color="Blue" />
+    <SolidColorBrush x:Key="DodgerBlueBrush" Color="DodgerBlue" />
+    <SolidColorBrush x:Key="RedBrush" Color="Red"/>
+    <Style x:Key="LinkButton" TargetType="Button">
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Foreground" Value="{StaticResource BlueBrush}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <TextBlock>
+                        <ContentPresenter />
+                    </TextBlock>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="true">
+                <Setter Property="Foreground" Value="{StaticResource RedBrush}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="SelectableTextBlockLikeStyle" TargetType="TextBox">
+        <Setter Property="IsReadOnly" Value="True" />
+        <Setter Property="Padding" Value="-2 0 0 0" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="HorizontalScrollBarVisibility" Value="Disabled" />
+        <Setter Property="VerticalScrollBarVisibility" Value="Disabled" />
+        <Style.Triggers>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver" Value="False" />
+                    <Condition Property="IsFocused" Value="False" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type TextBox}">
+                            <TextBlock Text="{TemplateBinding Text}" FontSize="{TemplateBinding FontSize}" FontStyle="{TemplateBinding FontStyle}" FontFamily="{TemplateBinding FontFamily}" FontWeight="{TemplateBinding FontWeight}" TextWrapping="{TemplateBinding TextWrapping}" Foreground="{DynamicResource NormalText}" Padding="0,0,0,0" />
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </MultiTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style TargetType="{x:Type TextElement}">
+        <Setter Property="FontFamily" Value="SimSun,宋体"></Setter>
+    </Style>
+    <Style TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="SimSun,宋体"></Setter>
+    </Style>
+</ResourceDictionary>

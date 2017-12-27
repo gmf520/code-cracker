@@ -1,0 +1,48 @@
+﻿<UserControl
+    x:Class="Liuliu.CodeCracker.UserControls.CodeFilterView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    mc:Ignorable="d"
+    d:DesignHeight="390" d:DesignWidth="280" d:DataContext="{Binding Main.CodeFilter,Source={StaticResource Locator}}">
+    <GroupBox Header="滤镜管理" Margin="0">
+        <StackPanel>
+            <DataGrid ItemsSource="{Binding FilterItems}" Height="180" BorderThickness="0 0 0 1" BorderBrush="DarkGray" 
+                      AutoGenerateColumns="False" GridLinesVisibility="All" ColumnWidth="*" CanUserSortColumns="False">
+                <DataGrid.Columns>
+                    <DataGridCheckBoxColumn Header="选" Binding="{Binding Enabled}" Width="35"/>
+                    <DataGridTemplateColumn Header="滤镜名称" Width="140">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding FilterName,NotifyOnValidationError=True}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <ComboBox ItemsSource="{Binding Main.CodeFilter.FilterNames,Source={StaticResource Locator}}" SelectedValue="{Binding FilterName}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="滤镜参数" Width="70">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding FilterArgs}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+            <GroupBox Header="滤镜参数" Height="100" Margin="0 3 0 0" Padding="0">
+                <WrapPanel x:Name="FilterArgsPanel" Margin="3"/>
+            </GroupBox>
+            <GroupBox Header="滤镜代码" Height="64" Margin="0 3 0 0" Padding="0">
+                <StackPanel Margin="5">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox Width="250" TextWrapping="Wrap"/>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+        </StackPanel>
+    </GroupBox>
+</UserControl>

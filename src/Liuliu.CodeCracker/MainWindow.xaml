@@ -1,23 +1,36 @@
-﻿<Window
+﻿<mah:MetroWindow
     x:Class="Liuliu.CodeCracker.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:local="clr-namespace:Liuliu.CodeCracker"
+    xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+    xmlns:uc="clr-namespace:Liuliu.CodeCracker.UserControls"
     mc:Ignorable="d"
     DataContext="{Binding Main, Source={StaticResource Locator}}"
-    Title="{Binding Title}" Height="420" Width="640" ResizeMode="CanMinimize">
-    <Grid >
+    Title="{Binding Title}" Height="450" Width="640" ResizeMode="CanMinimize">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
-        <Grid/>
+        <Grid Grid.Row="0" Margin="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="4*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0">
+                <uc:CodeLoadView DataContext="{Binding CodeLoad}" Margin="0 2 1 0"/>
+                <uc:CodeCrackView DataContext="{Binding CodeCrack}" Margin="0 2 1 0" Height="165"/>
+            </StackPanel>
+            <StackPanel Grid.Column="1">
+                <uc:CodeFilterView DataContext="{Binding CodeFilter}" Margin="0 2 0 1" Height="387"/>
+            </StackPanel>
+        </Grid>
         <StatusBar Grid.Row="1">
             <StackPanel Orientation="Horizontal">
-                <Label Content="{Binding Statusbar}" MaxWidth="600"/>
+                <Label Content="{Binding Statusbar}" Foreground="White" MaxWidth="600"/>
             </StackPanel>
         </StatusBar>
     </Grid>
-</Window>
+</mah:MetroWindow>

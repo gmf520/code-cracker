@@ -7,6 +7,8 @@
 //  <last-date>2017-12-27 2:12</last-date>
 // -----------------------------------------------------------------------
 
+using Microsoft.Practices.ServiceLocation;
+
 using OSharp.Utility.Wpf;
 
 
@@ -26,6 +28,21 @@ namespace Liuliu.CodeCracker.ViewModels
         {
             get { return _statusbar; }
             set { SetProperty(ref _statusbar, value, () => Statusbar); }
+        }
+
+        public CodeLoadViewModel CodeLoad
+        {
+            get { return ServiceLocator.Current.GetInstance<CodeLoadViewModel>(); }
+        }
+
+        public CodeCrackViewModel CodeCrack
+        {
+            get { return ServiceLocator.Current.GetInstance<CodeCrackViewModel>(); }
+        }
+
+        public CodeFilterViewModel CodeFilter
+        {
+            get { return ServiceLocator.Current.GetInstance<CodeFilterViewModel>(); }
         }
     }
 }
