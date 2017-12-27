@@ -4,11 +4,13 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:cmd="http://www.galasoft.ch/mvvmlight"
     mc:Ignorable="d"
     d:DesignHeight="390" d:DesignWidth="280" d:DataContext="{Binding Main.CodeFilter,Source={StaticResource Locator}}">
     <GroupBox Header="滤镜管理" Margin="0">
         <StackPanel>
-            <DataGrid ItemsSource="{Binding FilterItems}" Height="180" BorderThickness="0 0 0 1" BorderBrush="DarkGray" 
+            <DataGrid x:Name="CodeFilterDataGrid" ItemsSource="{Binding FilterItems}" Height="180" BorderThickness="0 0 0 1" BorderBrush="DarkGray" 
                       AutoGenerateColumns="False" GridLinesVisibility="All" ColumnWidth="*" CanUserSortColumns="False">
                 <DataGrid.Columns>
                     <DataGridCheckBoxColumn Header="选" Binding="{Binding Enabled}" Width="35"/>
@@ -20,7 +22,13 @@
                         </DataGridTemplateColumn.CellTemplate>
                         <DataGridTemplateColumn.CellEditingTemplate>
                             <DataTemplate>
-                                <ComboBox ItemsSource="{Binding Main.CodeFilter.FilterNames,Source={StaticResource Locator}}" SelectedValue="{Binding FilterName}"/>
+                                <ComboBox ItemsSource="{Binding Main.CodeFilter.FilterNames,Source={StaticResource Locator}}" SelectedValue="{Binding FilterName}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <cmd:EventToCommand Command="{Binding FilterNameChangedCommand,Mode=OneWay}" PassEventArgsToCommand="True"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </ComboBox>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellEditingTemplate>
                     </DataGridTemplateColumn>
@@ -39,7 +47,7 @@
             <GroupBox Header="滤镜代码" Height="64" Margin="0 3 0 0" Padding="0">
                 <StackPanel Margin="5">
                     <StackPanel Orientation="Horizontal">
-                        <TextBox Width="250" TextWrapping="Wrap"/>
+                        <TextBox Text="{Binding FilterCode}" Width="250" TextWrapping="Wrap"/>
                     </StackPanel>
                 </StackPanel>
             </GroupBox>

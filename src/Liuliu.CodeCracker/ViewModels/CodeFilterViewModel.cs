@@ -10,6 +10,13 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using System.Windows.Controls;
+using System.Windows.Input;
+
+using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
+
+using Newtonsoft.Json;
 
 using OSharp.Utility.Wpf;
 
@@ -43,12 +50,25 @@ namespace Liuliu.CodeCracker.ViewModels
             get { return _filterNames; }
             set { SetProperty(ref _filterNames, value, () => FilterNames); }
         }
-
+        
         private ObservableCollection<CodeFilterItemViewModel> _filterItems;
         public ObservableCollection<CodeFilterItemViewModel> FilterItems
         {
             get { return _filterItems; }
             set { SetProperty(ref _filterItems, value, () => FilterItems); }
+        }
+
+        private string _filterCode;
+        public string FilterCode
+        {
+            get { return _filterCode; }
+            set { SetProperty(ref _filterCode, value, () => FilterCode); }
+        }
+        
+        public override void RaisePropertyChanged(string propertyName)
+        {
+            base.RaisePropertyChanged(propertyName);
+            Messenger.Default.Send("UpdateImage", "CodeFilter");
         }
     }
 
@@ -75,6 +95,33 @@ namespace Liuliu.CodeCracker.ViewModels
         {
             get { return _filterArgs; }
             set { SetProperty(ref _filterArgs, value, () => FilterArgs); }
+        }
+
+        [JsonIgnore]
+        public ICommand FilterNameChangedCommand
+        {
+            get
+            {
+                return new RelayCommand<SelectionChangedEventArgs>(e =>
+                {
+                    if (e.AddedItems.Count == 0)
+                    {
+                        return;
+                    }
+                    string name = e.AddedItems[0] as string;
+                    if (name == null)
+                    {
+                        return;
+                    }
+                    Messenger.Default.Send(name, "CodeFilterInit");
+                });
+            }
+        }
+
+        public override void RaisePropertyChanged(string propertyName)
+        {
+            base.RaisePropertyChanged(propertyName);
+            Messenger.Default.Send("UpdateImage", "CodeFilter");
         }
     }
 }
