@@ -75,11 +75,17 @@ namespace Liuliu.CodeCracker.ViewModels
                     {
                         return;
                     }
-                    CodeFilterItemViewModel filter = (CodeFilterItemViewModel)((DataGrid)e.Source).SelectedValue;
-                    if (filter != null)
+                    DataGrid grid = e.Source as DataGrid;
+                    if (grid == null)
                     {
-                        Messenger.Default.Send(filter.FilterName, "CodeFilterInit");
+                        return;
                     }
+                    CodeFilterItemViewModel filter = grid.SelectedValue as CodeFilterItemViewModel;
+                    if (filter == null)
+                    {
+                        return;
+                    }
+                    Messenger.Default.Send(filter.FilterName, "CodeFilterInit");
                 });
             }
         }
