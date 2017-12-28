@@ -7,7 +7,14 @@
 //  <last-date>2017-12-27 18:53</last-date>
 // -----------------------------------------------------------------------
 
+using System.Drawing;
 using System.Windows.Controls;
+
+using GalaSoft.MvvmLight.Messaging;
+
+using Liuliu.CodeCracker.Contexts;
+using Liuliu.CodeCracker.Infrastructure;
+using Liuliu.CodeCracker.ViewModels;
 
 
 namespace Liuliu.CodeCracker.UserControls
@@ -20,6 +27,51 @@ namespace Liuliu.CodeCracker.UserControls
         public CodeCrackView()
         {
             InitializeComponent();
+            RegisterMessengers();
+        }
+
+        private void RegisterMessengers()
+        {
+            Messenger.Default.Register<string>(this,
+                "CodeCrackView",
+                msg =>
+                {
+                    switch (msg)
+                    {
+                        case "CrackCode":
+                            CrackCode();
+                            break;
+                    }
+                });
+        }
+
+        private void CrackCode()
+        {
+            CodeLoadViewModel loadModel = SoftContext.Locator.Main.CodeLoad;
+            if (loadModel.TargetImage == null)
+            {
+                return;
+            }
+            CodeCrackViewModel crackModel = SoftContext.Locator.Main.CodeCrack;
+            SimpleCodeCracker cracker = new SimpleCodeCracker(crackModel.Language, crackModel.CharList, crackModel.TessPath);
+            string code = cracker.CrackCode(loadModel.TargetImage, crackModel.PageSegMode);
+            crackModel.CrackResult = code;
+        }
+
+
+        private class SimpleCodeCracker : CodeCrackerBase
+        {
+            /// <summary>
+            /// 初始化一个<see cref="SimpleCodeCracker"/>类型的新实例
+            /// </summary>
+            public SimpleCodeCracker(string language, string charlist, string tesspath)
+                : base(language, charlist, tesspath)
+            { }
+
+            protected override Bitmap Binary(Bitmap bmp)
+            {
+                return bmp;
+            }
         }
     }
 }

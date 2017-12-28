@@ -38,7 +38,7 @@ namespace Liuliu.CodeCracker.UserControls
 
         private void RegisterMessengers()
         {
-            Messenger.Default.Register<string>(this,"CodeFilter",
+            Messenger.Default.Register<string>(this, "CodeFilterView",
                 msg =>
                 {
                     switch (msg)
@@ -162,13 +162,13 @@ namespace Liuliu.CodeCracker.UserControls
             _code = null;
             MainViewModel main = SoftContext.Locator.Main;
             CodeLoadViewModel load = main.CodeLoad;
-            if (load.SourceImage==null)
+            if (load.SourceImage == null)
             {
                 return;
             }
             byte[,] bytes = load.SourceImage.ToGrayArray2D();
             _code += "return bmp.ToGrayArray2D()";
-            foreach (CodeFilterItemViewModel filter in main.CodeFilter.FilterItems.Where(m=>m.Enabled))
+            foreach (CodeFilterItemViewModel filter in main.CodeFilter.FilterItems.Where(m => m.Enabled))
             {
                 bytes = CodeFilter(bytes, filter);
             }

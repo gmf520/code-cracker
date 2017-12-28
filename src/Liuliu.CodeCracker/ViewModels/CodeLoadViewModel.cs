@@ -15,8 +15,11 @@ using System.Windows;
 using System.Windows.Input;
 
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 
 using Microsoft.Win32;
+
+using Newtonsoft.Json;
 
 using OSharp.Utility.Extensions;
 using OSharp.Utility.Wpf;
@@ -37,7 +40,15 @@ namespace Liuliu.CodeCracker.ViewModels
         public string LocalPath
         {
             get { return _localPath; }
-            set { SetProperty(ref _localPath, value, () => LocalPath); }
+            set
+            {
+                SetProperty(ref _localPath, value, () => LocalPath);
+                if (value != null && !File.Exists(value))
+                {
+                    byte[] bytes = File.ReadAllBytes(value);
+                    LoadImage(bytes);
+                }
+            }
         }
 
         private string _codeUrl;
@@ -48,6 +59,7 @@ namespace Liuliu.CodeCracker.ViewModels
         }
 
         private Bitmap _processImage;
+        [JsonIgnore]
         public Bitmap ProcessImage
         {
             get { return _processImage; }
@@ -55,6 +67,7 @@ namespace Liuliu.CodeCracker.ViewModels
         }
 
         private Bitmap _sourceImage;
+        [JsonIgnore]
         public Bitmap SourceImage
         {
             get { return _sourceImage; }
@@ -62,12 +75,14 @@ namespace Liuliu.CodeCracker.ViewModels
         }
 
         private Bitmap _targetImage;
+        [JsonIgnore]
         public Bitmap TargetImage
         {
             get { return _targetImage; }
             set { SetProperty(ref _targetImage, value, () => TargetImage); }
         }
 
+        [JsonIgnore]
         public ICommand CodeBrowseCommand
         {
             get
@@ -82,17 +97,13 @@ namespace Liuliu.CodeCracker.ViewModels
                     dialog.FileOk += (sender, e) =>
                     {
                         LocalPath = dialog.FileName;
-                        if (File.Exists(LocalPath))
-                        {
-                            Bitmap bmp = new Bitmap(LocalPath);
-                            ProcessImage = SourceImage = TargetImage = bmp;
-                        }
                     };
                     dialog.ShowDialog();
                 });
             }
         }
 
+        [JsonIgnore]
         public ICommand RemoteRefreshCommand
         {
             get
@@ -110,16 +121,24 @@ namespace Liuliu.CodeCracker.ViewModels
                         byte[] bytes = e.Result;
                         if (bytes != null)
                         {
-                            using (MemoryStream ms = new MemoryStream(bytes))
-                            {
-                                Bitmap bmp = new Bitmap(ms);
-                                ProcessImage = SourceImage = TargetImage = bmp;
-                            }
+                            LoadImage(bytes);
                         }
                     };
                     client.DownloadDataAsync(new Uri(CodeUrl));
                 });
             }
+        }
+
+        private void LoadImage(byte[] bytes)
+        {
+            using (MemoryStream ms = new MemoryStream(bytes))
+            {
+                Bitmap bmp = new Bitmap(ms);
+                ProcessImage = SourceImage = TargetImage = bmp;
+            }
+
+            Messenger.Default.Send("UpdateImage", "CodeFilterView");
+            Messenger.Default.Send("CrackCode", "CodeCrackView");
         }
     }
 }

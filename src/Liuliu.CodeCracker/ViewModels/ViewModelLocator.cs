@@ -23,6 +23,7 @@ namespace Liuliu.CodeCracker.ViewModels
         private static void RegisterViewModels()
         {
             SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<MainCommandViewModel>();
             SimpleIoc.Default.Register<CodeLoadViewModel>();
             SimpleIoc.Default.Register<CodeCrackViewModel>();
             SimpleIoc.Default.Register<CodeFilterViewModel>();
@@ -31,6 +32,11 @@ namespace Liuliu.CodeCracker.ViewModels
         public MainViewModel Main
         {
             get { return ServiceLocator.Current.GetInstance<MainViewModel>(); }
+        }
+
+        public MainCommandViewModel MainCommand
+        {
+            get { return ServiceLocator.Current.GetInstance<MainCommandViewModel>(); }
         }
     }
 }

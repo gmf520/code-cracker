@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:cmd="http://www.galasoft.ch/mvvmlight"
+    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
     mc:Ignorable="d"
     d:DesignHeight="390" d:DesignWidth="280" d:DataContext="{Binding Main.CodeFilter,Source={StaticResource Locator}}">
     <GroupBox Header="滤镜管理" Margin="0">
@@ -40,6 +41,11 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <cmd:EventToCommand Command="{Binding SelectionChangedCommand,Mode=OneWay}" PassEventArgsToCommand="True"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
             </DataGrid>
             <GroupBox Header="滤镜参数" Height="100" Margin="0 3 0 0" Padding="0">
                 <WrapPanel x:Name="FilterArgsPanel" Margin="3"/>
@@ -47,7 +53,7 @@
             <GroupBox Header="滤镜代码" Height="64" Margin="0 3 0 0" Padding="0">
                 <StackPanel Margin="5">
                     <StackPanel Orientation="Horizontal">
-                        <TextBox Text="{Binding FilterCode}" Width="250" TextWrapping="Wrap"/>
+                        <TextBox Text="{Binding FilterCode}" Width="250" mah:TextBoxHelper.SelectAllOnFocus="True" ToolTip="{Binding FilterCode}"/>
                     </StackPanel>
                 </StackPanel>
             </GroupBox>

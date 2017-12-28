@@ -11,14 +11,14 @@
             <StackPanel Orientation="Horizontal">
                 <RadioButton IsChecked="{Binding FromLocal}" Content="本地：" GroupName="FromType"/>
                 <StackPanel Orientation="Horizontal" IsEnabled="{Binding FromLocal}">
-                    <TextBox Width="233" Text="{Binding LocalPath}"/>
+                    <TextBox Width="233" Text="{Binding LocalPath}" ToolTip="{Binding LocalPath}"/>
                     <Button Content="浏览" Command="{Binding CodeBrowseCommand}"/>
                 </StackPanel>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 3">
                 <RadioButton IsChecked="{Binding FromLocal, Converter={StaticResource BooleanToNoConverter}}" Content="网络：" GroupName="FromType"/>
                 <StackPanel Orientation="Horizontal" IsEnabled="{Binding FromLocal,Converter={StaticResource BooleanToNoConverter}}">
-                    <TextBox Width="233" Text="{Binding CodeUrl}"/>
+                    <TextBox Width="233" Text="{Binding CodeUrl}" ToolTip="{Binding CodeUrl}"/>
                     <Button Content="刷新" Command="{Binding RemoteRefreshCommand}"/>
                 </StackPanel>
             </StackPanel>

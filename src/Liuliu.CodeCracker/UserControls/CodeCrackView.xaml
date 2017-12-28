@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:cvt="clr-namespace:Liuliu.CodeCracker.Converters"
     mc:Ignorable="d"
     d:DesignHeight="166" d:DesignWidth="355" d:DataContext="{Binding Main.CodeCrack,Source={StaticResource Locator}}">
@@ -14,15 +15,20 @@
         <StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Content="语言："/>
-                <TextBox Text="{Binding Language}" Width="50" Margin="0 0 10 0" ToolTip="不变更请留空，默认为 eng"/>
+                <TextBox Text="{Binding Language}" Width="50" Margin="0 0 10 0" mah:TextBoxHelper.SelectAllOnFocus="True"/>
                 <Label Content="字符集："/>
-                <TextBox Text="{Binding CharList}" Width="170" Margin="0 0 10 0" ToolTip="不变更请留空，默认为 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"/>
+                <TextBox Text="{Binding CharList}" Width="170" Margin="0 0 10 0" mah:TextBoxHelper.SelectAllOnFocus="True" ToolTip="{Binding CharList}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 5">
-                <Label Content="页模式："/>
+                <Label Content="字库："/>
+                <TextBox Text="{Binding TessPath}" Width="230" mah:TextBoxHelper.SelectAllOnFocus="True" ToolTip="{Binding TessPath}"/>
+                <Button Content="浏览" Command="{Binding TessPathBrowseCommand}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0">
+                <Label Content="模式："/>
                 <ComboBox ItemsSource="{Binding Main.CodeCrack.PageSegModes,Source={StaticResource Locator}}" SelectedValue="{Binding PageSegMode, Converter={StaticResource StringToPageSegModeConverter}}" Width="150" Margin="0 0 10 0"/>
             </StackPanel>
-            <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal" Margin="0 5 0 0">
                 <Label Content="识别结果："/>
                 <Label Content="{Binding CrackResult}" FontSize="20" Foreground="OrangeRed"/>
             </StackPanel>

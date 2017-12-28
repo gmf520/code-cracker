@@ -9,28 +9,36 @@
     mc:Ignorable="d"
     DataContext="{Binding Main, Source={StaticResource Locator}}"
     Title="{Binding Title}" Height="450" Width="640" ResizeMode="CanMinimize">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="30"/>
-        </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Margin="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="5*"/>
-                <ColumnDefinition Width="4*"/>
-            </Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="0">
-                <uc:CodeLoadView DataContext="{Binding CodeLoad}" Margin="0 2 1 0"/>
-                <uc:CodeCrackView DataContext="{Binding CodeCrack}" Margin="0 2 1 0" Height="165"/>
-            </StackPanel>
-            <StackPanel Grid.Column="1">
-                <uc:CodeFilterView DataContext="{Binding CodeFilter}" Margin="0 2 0 1" Height="387"/>
-            </StackPanel>
+    <mah:MetroWindow.RightWindowCommands>
+        <mah:WindowCommands DataContext="{Binding MainCommand,Source={StaticResource Locator}}">
+            <Button Content="加载配置" Command="{Binding BrowseConfigCommand}" Cursor="Hand"/>
+            <Button Content="保存配置" Command="{Binding SaveConfigCommand}" Cursor="Hand"/>
+        </mah:WindowCommands>
+    </mah:MetroWindow.RightWindowCommands>
+    <mah:MetroContentControl>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="30"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Margin="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="4*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <uc:CodeLoadView DataContext="{Binding CodeLoad}" Margin="0 2 1 0"/>
+                    <uc:CodeCrackView DataContext="{Binding CodeCrack}" Margin="0 2 1 0" Height="165"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <uc:CodeFilterView DataContext="{Binding CodeFilter}" Margin="0 2 0 1" Height="387"/>
+                </StackPanel>
+            </Grid>
+            <StatusBar Grid.Row="1">
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="{Binding Statusbar}" Foreground="White" MaxWidth="600"/>
+                </StackPanel>
+            </StatusBar>
         </Grid>
-        <StatusBar Grid.Row="1">
-            <StackPanel Orientation="Horizontal">
-                <Label Content="{Binding Statusbar}" Foreground="White" MaxWidth="600"/>
-            </StackPanel>
-        </StatusBar>
-    </Grid>
+    </mah:MetroContentControl>
 </mah:MetroWindow>

@@ -50,7 +50,7 @@ namespace Liuliu.CodeCracker.ViewModels
             get { return _filterNames; }
             set { SetProperty(ref _filterNames, value, () => FilterNames); }
         }
-        
+
         private ObservableCollection<CodeFilterItemViewModel> _filterItems;
         public ObservableCollection<CodeFilterItemViewModel> FilterItems
         {
@@ -64,7 +64,26 @@ namespace Liuliu.CodeCracker.ViewModels
             get { return _filterCode; }
             set { SetProperty(ref _filterCode, value, () => FilterCode); }
         }
-        
+
+        public ICommand SelectionChangedCommand
+        {
+            get
+            {
+                return new RelayCommand<SelectionChangedEventArgs>(e =>
+                {
+                    if (e.OriginalSource is TextBlock || e.OriginalSource is Border)
+                    {
+                        return;
+                    }
+                    CodeFilterItemViewModel filter = (CodeFilterItemViewModel)((DataGrid)e.Source).SelectedValue;
+                    if (filter != null)
+                    {
+                        Messenger.Default.Send(filter.FilterName, "CodeFilterInit");
+                    }
+                });
+            }
+        }
+
         public override void RaisePropertyChanged(string propertyName)
         {
             base.RaisePropertyChanged(propertyName);
@@ -121,7 +140,8 @@ namespace Liuliu.CodeCracker.ViewModels
         public override void RaisePropertyChanged(string propertyName)
         {
             base.RaisePropertyChanged(propertyName);
-            Messenger.Default.Send("UpdateImage", "CodeFilter");
+            Messenger.Default.Send("UpdateImage", "CodeFilterView");
+            Messenger.Default.Send("CrackCode", "CodeCrackView");
         }
     }
 }

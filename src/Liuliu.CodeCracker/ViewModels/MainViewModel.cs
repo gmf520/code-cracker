@@ -29,20 +29,26 @@ namespace Liuliu.CodeCracker.ViewModels
             get { return _statusbar; }
             set { SetProperty(ref _statusbar, value, () => Statusbar); }
         }
-
+        
+        private CodeLoadViewModel _codeLoad= ServiceLocator.Current.GetInstance<CodeLoadViewModel>();
         public CodeLoadViewModel CodeLoad
         {
-            get { return ServiceLocator.Current.GetInstance<CodeLoadViewModel>(); }
+            get { return _codeLoad; }
+            set { SetProperty(ref _codeLoad, value, () => CodeLoad); }
         }
 
-        public CodeCrackViewModel CodeCrack
-        {
-            get { return ServiceLocator.Current.GetInstance<CodeCrackViewModel>(); }
-        }
-
+        private CodeFilterViewModel _codeFilter= ServiceLocator.Current.GetInstance<CodeFilterViewModel>();
         public CodeFilterViewModel CodeFilter
         {
-            get { return ServiceLocator.Current.GetInstance<CodeFilterViewModel>(); }
+            get { return _codeFilter; }
+            set { SetProperty(ref _codeFilter, value, () => CodeFilter); }
+        }
+
+        private CodeCrackViewModel _codeCrack = ServiceLocator.Current.GetInstance<CodeCrackViewModel>();
+        public CodeCrackViewModel CodeCrack
+        {
+            get { return _codeCrack; }
+            set { SetProperty(ref _codeCrack, value, () => CodeCrack); }
         }
     }
 }
