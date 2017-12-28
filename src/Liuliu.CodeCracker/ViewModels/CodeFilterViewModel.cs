@@ -85,7 +85,7 @@ namespace Liuliu.CodeCracker.ViewModels
                     {
                         return;
                     }
-                    Messenger.Default.Send(filter.FilterName, "CodeFilterInit");
+                    Messenger.Default.Send(filter, "ShowFilterSettingView");
                 });
             }
         }
@@ -139,6 +139,8 @@ namespace Liuliu.CodeCracker.ViewModels
                         return;
                     }
                     Messenger.Default.Send(name, "CodeFilterInit");
+                    Messenger.Default.Send("UpdateImage", "CodeFilterView");
+                    Messenger.Default.Send("CrackCode", "CodeCrackView");
                 });
             }
         }
@@ -146,8 +148,11 @@ namespace Liuliu.CodeCracker.ViewModels
         public override void RaisePropertyChanged(string propertyName)
         {
             base.RaisePropertyChanged(propertyName);
-            Messenger.Default.Send("UpdateImage", "CodeFilterView");
-            Messenger.Default.Send("CrackCode", "CodeCrackView");
+            if (propertyName == "FilterArgs")
+            {
+                Messenger.Default.Send("UpdateImage", "CodeFilterView");
+                Messenger.Default.Send("CrackCode", "CodeCrackView");
+            }
         }
     }
 }

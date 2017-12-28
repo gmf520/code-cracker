@@ -48,7 +48,8 @@ namespace Liuliu.CodeCracker.UserControls
                             break;
                     }
                 });
-            Messenger.Default.Register<string>(this, "CodeFilterInit", name => CodeFilterInit(name));
+            Messenger.Default.Register<string>(this, "CodeFilterInit", CodeFilterInit);
+            Messenger.Default.Register<CodeFilterItemViewModel>(this, "ShowFilterSettingView", ShowFilterSettingView);
         }
 
         private void CodeFilterInit(string name)

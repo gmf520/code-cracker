@@ -8,6 +8,7 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Net;
@@ -16,6 +17,8 @@ using System.Windows.Input;
 
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+
+using Liuliu.CodeCracker.Contexts;
 
 using Microsoft.Win32;
 
@@ -96,7 +99,10 @@ namespace Liuliu.CodeCracker.ViewModels
                     };
                     dialog.FileOk += (sender, e) =>
                     {
+                        Stopwatch watch = Stopwatch.StartNew();
                         LocalPath = dialog.FileName;
+                        watch.Stop();
+                        SoftContext.Locator.Main.Statusbar = $"图像“{Path.GetFileName(dialog.FileName)}”加载成功，耗时：{watch.Elapsed}";
                     };
                     dialog.ShowDialog();
                 });
@@ -115,6 +121,7 @@ namespace Liuliu.CodeCracker.ViewModels
                         MessageBox.Show("网络验证码的URL不能为空");
                         return;
                     }
+                    Stopwatch watch = Stopwatch.StartNew();
                     WebClient client = new WebClient();
                     client.DownloadDataCompleted += (sender, e) =>
                     {
@@ -122,6 +129,8 @@ namespace Liuliu.CodeCracker.ViewModels
                         if (bytes != null)
                         {
                             LoadImage(bytes);
+                            watch.Stop();
+                            SoftContext.Locator.Main.Statusbar = $"远程图像刷新成功，耗时：{watch.Elapsed}";
                         }
                     };
                     client.DownloadDataAsync(new Uri(CodeUrl));

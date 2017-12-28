@@ -15,9 +15,11 @@
         <StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Content="语言："/>
-                <TextBox Text="{Binding Language}" Width="50" Margin="0 0 10 0" mah:TextBoxHelper.SelectAllOnFocus="True"/>
+                <!--<TextBox Text="{Binding Language}" Width="50" Margin="0 0 10 0" mah:TextBoxHelper.SelectAllOnFocus="True"/>-->
+                <ComboBox ItemsSource="{Binding Languages}" SelectedValue="{Binding Language}" IsEditable="True" Width="60"/>
                 <Label Content="字符集："/>
-                <TextBox Text="{Binding CharList}" Width="170" Margin="0 0 10 0" mah:TextBoxHelper.SelectAllOnFocus="True" ToolTip="{Binding CharList}"/>
+                <!--<TextBox Text="{Binding CharList}" Width="175" Margin="0 0 10 0" mah:TextBoxHelper.SelectAllOnFocus="True" ToolTip="{Binding CharList}"/>-->
+                <ComboBox ItemsSource="{Binding CharDict.Keys}" SelectedValue="{Binding CharList}" IsEditable="True" Width="175"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 5">
                 <Label Content="字库："/>

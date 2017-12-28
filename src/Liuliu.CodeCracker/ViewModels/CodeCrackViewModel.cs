@@ -8,6 +8,7 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -27,21 +28,43 @@ namespace Liuliu.CodeCracker.ViewModels
 {
     public class CodeCrackViewModel : ViewModelExBase
     {
-        private string _language="eng";
+        public string[] Languages
+        {
+            get { return new[] { "eng" }; }
+        }
+
+        private string _language = "eng";
         public string Language
         {
             get { return _language; }
             set { SetProperty(ref _language, value, () => Language); }
         }
 
-        private string _charlist= "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        public IDictionary<string,string> CharDict
+        {
+            get
+            {
+                return new Dictionary<string, string>()
+                {
+                    {"0-9","0123456789" },
+                    {"a-z","abcdefghijklmnopqrstuvwxyz" },
+                    {"A-Z","ABCDEFGHIJKLMNOPQRSTUVWXYZ" },
+                    {"a-zA-Z","abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" },
+                    {"0-9a-z","0123456789abcdefghijklmnopqrstuvwxyz" },
+                    {"0-9A-Z","0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ" },
+                    {"0-9a-zA-Z","0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" }
+                };
+            }
+        }
+
+        private string _charlist = "0-9a-zA-Z";
         public string CharList
         {
             get { return _charlist; }
             set { SetProperty(ref _charlist, value, () => CharList); }
         }
 
-        private string _tessPath= "tessdata";
+        private string _tessPath = "tessdata";
         public string TessPath
         {
             get { return _tessPath; }
@@ -82,7 +105,7 @@ namespace Liuliu.CodeCracker.ViewModels
                 {
                     FolderBrowserDialog dialog = new FolderBrowserDialog()
                     {
-                        SelectedPath = TessPath??Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+                        SelectedPath = TessPath ?? Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
                     };
                     DialogResult result = dialog.ShowDialog();
                     if (result == DialogResult.Cancel)

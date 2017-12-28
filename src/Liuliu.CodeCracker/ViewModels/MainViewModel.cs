@@ -34,7 +34,10 @@ namespace Liuliu.CodeCracker.ViewModels
         public CodeLoadViewModel CodeLoad
         {
             get { return _codeLoad; }
-            set { SetProperty(ref _codeLoad, value, () => CodeLoad); }
+            set
+            {
+                SetProperty(ref _codeLoad, value, () => CodeLoad);
+            }
         }
 
         private CodeFilterViewModel _codeFilter= ServiceLocator.Current.GetInstance<CodeFilterViewModel>();

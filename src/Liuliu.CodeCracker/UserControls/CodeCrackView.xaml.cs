@@ -18,6 +18,8 @@ using Liuliu.CodeCracker.Contexts;
 using Liuliu.CodeCracker.Infrastructure;
 using Liuliu.CodeCracker.ViewModels;
 
+using OSharp.Utility.Extensions;
+
 
 namespace Liuliu.CodeCracker.UserControls
 {
@@ -55,15 +57,36 @@ namespace Liuliu.CodeCracker.UserControls
                 return;
             }
             CodeCrackViewModel crackModel = SoftContext.Locator.Main.CodeCrack;
-            if (!File.Exists(Path.Combine(crackModel.TessPath, $"{crackModel.Language}.traineddata")))
+            string lang = crackModel.Language;
+            if (lang.IsNullOrEmpty())
             {
-                MessageBox.Show($"字典路径“{crackModel.TessPath}”无法找到字库“{crackModel.Language}.traineddata”，请重新定位，或者到 https://github.com/tesseract-ocr/tessdata/blob/master/eng.traineddata 下载",
+                lang = "eng";
+            }
+            string charlist = crackModel.CharList;
+            if (charlist.IsNullOrEmpty())
+            {
+                charlist = "0-9a-zA-Z";
+            }
+            if (crackModel.CharDict.ContainsKey(charlist))
+            {
+                charlist = crackModel.CharDict[charlist];
+            }
+            string tesspath = crackModel.TessPath;
+            if (!Directory.Exists(tesspath))
+            {
+                MessageBox.Show($"字典路径“{tesspath}”不存在");
+                return;
+            }
+            
+            if (!File.Exists(Path.Combine(tesspath, $"{lang}.traineddata")))
+            {
+                MessageBox.Show($"字典路径“{tesspath}”无法找到字库“{lang}.traineddata”，请重新定位，或者到 https://github.com/tesseract-ocr/tessdata/blob/master/eng.traineddata 下载",
                     "错误",
                     MessageBoxButton.OK,
                     MessageBoxImage.Error);
                 return;
             }
-            SimpleCodeCracker cracker = new SimpleCodeCracker(crackModel.Language, crackModel.CharList, crackModel.TessPath);
+            SimpleCodeCracker cracker = new SimpleCodeCracker(lang, charlist, tesspath);
             string code = cracker.CrackCode(loadModel.TargetImage, crackModel.PageSegMode);
             crackModel.CrackResult = code;
         }

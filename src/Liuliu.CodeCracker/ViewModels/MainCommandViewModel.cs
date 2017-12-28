@@ -14,6 +14,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 using GalaSoft.MvvmLight.Command;
 
@@ -29,7 +30,7 @@ namespace Liuliu.CodeCracker.ViewModels
 {
     public class MainCommandViewModel : ViewModelExBase
     {
-        private string _configFile, _configPath = "configs";
+        private string _configFile;
 
         public ICommand BrowseConfigCommand
         {
@@ -61,11 +62,12 @@ namespace Liuliu.CodeCracker.ViewModels
                             main.CodeLoad = codeLoad;
                             main.CodeFilter = codeFilter;
                             main.CodeCrack = codeCrack;
+                            MessengerInstance.Send("UpdateImage", "CodeFilterView");
+                            MessengerInstance.Send("CrackCode", "CodeCrackView");
                         }
                         catch (Exception ex)
                         {
                             MessageBox.Show($"配置文件格式错误：{ex.Message}", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
-                            return;
                         }
                         main.Statusbar = $"配置文件“{Path.GetFileName(_configFile)}”加载成功";
                     };
@@ -89,10 +91,6 @@ namespace Liuliu.CodeCracker.ViewModels
                     };
                     if (_configFile == null)
                     {
-                        if (!Directory.Exists(_configPath))
-                        {
-                            Directory.CreateDirectory(_configPath);
-                        }
                         _configFile = $"config-{DateTime.Now.ToString("HHmmss")}.json";
                     }
 
@@ -104,8 +102,9 @@ namespace Liuliu.CodeCracker.ViewModels
                     };
                     dialog.FileOk += (sender, e) =>
                     {
-                        File.WriteAllLines(_configFile, lines);
-                        main.Statusbar = $"配置文件“{Path.GetFileName(_configFile)}”保存成功";
+                        File.WriteAllLines(dialog.FileName, lines);
+                        _configFile = dialog.FileName;
+                        main.Statusbar = $"配置文件“{Path.GetFileName(dialog.FileName)}”保存成功";
                     };
                     dialog.ShowDialog();
                 });
