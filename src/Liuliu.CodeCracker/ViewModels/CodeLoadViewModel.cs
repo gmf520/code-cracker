@@ -43,7 +43,7 @@ namespace Liuliu.CodeCracker.ViewModels
             set
             {
                 SetProperty(ref _localPath, value, () => LocalPath);
-                if (value != null && !File.Exists(value))
+                if (value != null && File.Exists(value))
                 {
                     byte[] bytes = File.ReadAllBytes(value);
                     LoadImage(bytes);
