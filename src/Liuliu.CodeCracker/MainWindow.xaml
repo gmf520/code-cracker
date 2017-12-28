@@ -8,7 +8,7 @@
     xmlns:uc="clr-namespace:Liuliu.CodeCracker.UserControls"
     mc:Ignorable="d"
     DataContext="{Binding Main, Source={StaticResource Locator}}"
-    Title="{Binding Title}" Height="450" Width="640" ResizeMode="CanMinimize">
+    Title="{Binding Title}" Height="450" Width="640" ResizeMode="CanMinimize" Icon="Resources/ma.ico">
     <mah:MetroWindow.RightWindowCommands>
         <mah:WindowCommands DataContext="{Binding MainCommand,Source={StaticResource Locator}}">
             <Button Content="加载配置" Command="{Binding BrowseConfigCommand}" Cursor="Hand"/>

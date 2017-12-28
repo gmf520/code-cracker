@@ -8,6 +8,8 @@
 // -----------------------------------------------------------------------
 
 using System.Drawing;
+using System.IO;
+using System.Windows;
 using System.Windows.Controls;
 
 using GalaSoft.MvvmLight.Messaging;
@@ -53,6 +55,14 @@ namespace Liuliu.CodeCracker.UserControls
                 return;
             }
             CodeCrackViewModel crackModel = SoftContext.Locator.Main.CodeCrack;
+            if (!File.Exists(Path.Combine(crackModel.TessPath, $"{crackModel.Language}.traineddata")))
+            {
+                MessageBox.Show($"字典路径“{crackModel.TessPath}”无法找到字库“{crackModel.Language}.traineddata”，请重新定位，或者到 https://github.com/tesseract-ocr/tessdata/blob/master/eng.traineddata 下载",
+                    "错误",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+                return;
+            }
             SimpleCodeCracker cracker = new SimpleCodeCracker(crackModel.Language, crackModel.CharList, crackModel.TessPath);
             string code = cracker.CrackCode(loadModel.TargetImage, crackModel.PageSegMode);
             crackModel.CrackResult = code;
