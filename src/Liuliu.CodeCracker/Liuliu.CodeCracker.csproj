@@ -54,10 +54,10 @@
       <HintPath>..\..\packages\Newtonsoft.Json.7.0.1\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="OSharp.Utility, Version=4.1.0.0, Culture=neutral, PublicKeyToken=e7429fb96767d50d, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\OSharp.Utility.4.1.30.1\lib\net40\OSharp.Utility.dll</HintPath>
+      <HintPath>..\..\packages\OSharp.Utility.4.1.31\lib\net40\OSharp.Utility.dll</HintPath>
     </Reference>
     <Reference Include="OSharp.Utility.Wpf, Version=4.1.0.0, Culture=neutral, PublicKeyToken=e7429fb96767d50d, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\OSharp.Utility.Wpf.4.1.30.1\lib\net40\OSharp.Utility.Wpf.dll</HintPath>
+      <HintPath>..\..\packages\OSharp.Utility.Wpf.4.1.31\lib\net40\OSharp.Utility.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
