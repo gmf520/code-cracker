@@ -116,7 +116,7 @@ namespace Liuliu.CodeCracker.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    if (CodeUrl == null || !CodeUrl.IsUrl())
+                    if (CodeUrl == null || !CodeUrl.StartsWith("http"))
                     {
                         MessageBox.Show("网络验证码的URL不能为空");
                         return;
