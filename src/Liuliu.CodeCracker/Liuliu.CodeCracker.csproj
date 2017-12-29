@@ -7,7 +7,7 @@
     <ProjectGuid>{86F9005B-2245-4C27-ADE8-DF3F836824FD}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>Liuliu.CodeCracker</RootNamespace>
-    <AssemblyName>Liuliu.CodeCracker</AssemblyName>
+    <AssemblyName>CodeCracker</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -34,8 +34,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>
-    </ApplicationIcon>
+    <ApplicationIcon>Resources\ma.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="GalaSoft.MvvmLight, Version=5.3.0.19038, Culture=neutral, PublicKeyToken=0e453835af4ee6ce, processorArchitecture=MSIL">
