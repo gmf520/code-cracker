@@ -23,8 +23,9 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 5">
                 <Label Content="字库："/>
-                <TextBox Text="{Binding TessPath}" Width="230" mah:TextBoxHelper.SelectAllOnFocus="True" ToolTip="{Binding TessPath}"/>
+                <TextBox Text="{Binding TessPath}" Width="210" mah:TextBoxHelper.SelectAllOnFocus="True" ToolTip="{Binding TessPath}"/>
                 <Button Content="浏览" Command="{Binding TessPathBrowseCommand}"/>
+                <Button Content="下载" Command="{Binding TessdataDownloadCommand}" Style="{StaticResource LinkButton}" Margin="5 10 0 0"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0">
                 <Label Content="模式："/>

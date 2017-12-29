@@ -9,6 +9,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -117,6 +118,17 @@ namespace Liuliu.CodeCracker.ViewModels
                     {
                         TessPath = folder;
                     }
+                });
+            }
+        }
+
+        public ICommand TessdataDownloadCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    Process.Start("https://github.com/tesseract-ocr/tessdata/blob/master/eng.traineddata");
                 });
             }
         }
